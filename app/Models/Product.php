@@ -13,4 +13,13 @@ class Product extends Model
         'name','description','stock','minimum_stock','maximum_stock',
         'price_purchase','price_sale','tax','discount','active'
     ];
+
+    protected $appends=['_links'];
+
+    public function getLinksAttribute(){
+        return[
+            'href'=>route('product.show',['id'=>$this->id]),
+            'rel'=>'product'
+        ];
+    }
 }

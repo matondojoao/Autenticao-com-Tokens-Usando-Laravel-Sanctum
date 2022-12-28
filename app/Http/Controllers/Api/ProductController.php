@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use PhpParser\Node\Stmt\TryCatch;
 
 class ProductController extends Controller
 {
@@ -36,7 +37,7 @@ class ProductController extends Controller
         ],200);
        } catch (\Throwable $th) {
            return response()->json([
-            'error'=>$th
+            'error'=>$th->getMessage()
         ],401);
        }
     }
@@ -49,7 +50,12 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $product=Product::findOrFail($id);
+            return response()->json(['data'=>$product],200);
+        } catch (\Throwable $th) {
+            return response()->json(['error'=>$th->getMessage()],401);
+        }
     }
 
     /**
@@ -61,7 +67,15 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $product=Product::findOrFail($id)->update($request->all());
+            return response()->json([
+            'msg'=>'Produto atualizado com sucesso'
+            ],200);
+        } catch (\Throwable $th) {
+           return response()->json(['error'=>$th->getMessage()]);
+        }
+
     }
 
     /**
