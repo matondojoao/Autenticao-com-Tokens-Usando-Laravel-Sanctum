@@ -86,6 +86,13 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $product=Product::findOrFail($id)->delete();
+            return response()->json([
+            'msg'=>'Produto removido com sucesso'
+            ],200);
+        } catch (\Throwable $th) {
+           return response()->json(['error'=>$th->getMessage()]);
+        }
     }
 }
