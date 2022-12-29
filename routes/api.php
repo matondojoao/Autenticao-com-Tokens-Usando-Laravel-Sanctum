@@ -21,7 +21,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix'=>'product'], function(){
+Route::group(['prefix' => 'auth'], function() {
+    Route::post('login',[LoginController::class,'login']);
+    Route::post('logout',[LoginController::class,'logout']);
+    Route::post('register',[RegisterController::class,'register']);
+});
+
+Route::group(['prefix'=>'product','middleware'=>'auth:sanctum'], function(){
    Route::get('/',[ProductController::class,'index'])->name('product.index');
    Route::post('/',[ProductController::class,'store'])->name('product.store');
    Route::delete('/{id}',[ProductController::class,'destroy'])->name('product.delete');
@@ -29,9 +35,5 @@ Route::group(['prefix'=>'product'], function(){
    Route::put('/{id}',[ProductController::class,'update'])->name('product.update');
 });
 
-Route::group(['prefix' => 'auth'], function() {
-    Route::post('login',[LoginController::class,'login']);
-    Route::post('logout',[LoginController::class,'logout']);
-    Route::post('register',[RegisterController::class,'register']);
-});
+
 

@@ -22,7 +22,7 @@ class LoginController extends Controller
             'Error'=>'Falha ao tentar logar'
            ],401);
         }
-        $token=Auth()->user()->createAccessToken();
+        $token=Auth()->user()->createToken('auth_token');
         return response()->json([
             'token'=>$token->plainTextToken
            ],200);
