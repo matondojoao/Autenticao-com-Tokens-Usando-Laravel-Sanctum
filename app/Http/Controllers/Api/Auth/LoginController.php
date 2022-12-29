@@ -35,7 +35,7 @@ class LoginController extends Controller
        // Auth()->user()->tokens()->delete(); // Revoga todos os tokens...
 
         return response()->json([
-            'msg'=>'Logout feito com sucesso.'
+            'msg'=>'Logout feito com sucesso'
            ],401);
     }
 }
