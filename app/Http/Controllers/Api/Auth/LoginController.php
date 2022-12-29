@@ -22,6 +22,7 @@ class LoginController extends Controller
             'Error'=>'Falha ao tentar logar'
            ],401);
         }
+
         $token=Auth()->user()->createToken('auth_token');
         return response()->json([
             'token'=>$token->plainTextToken
@@ -29,7 +30,10 @@ class LoginController extends Controller
     }
     public function logout()
     {
-        $token=Auth()->user()->currentAccessToken()->delete();
+        Auth()->user()->currentAccessToken()->delete();//Revogue o token que foi usado para autenticar a solicitação atual...
+
+        // Auth()->user()->tokens()->delete();  Revoga todos os tokens...
+
         return response()->json([
             'msg'=>'Logout feito com sucesso.'
            ],401);
