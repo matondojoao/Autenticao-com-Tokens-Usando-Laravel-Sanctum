@@ -27,4 +27,11 @@ class LoginController extends Controller
             'token'=>$token->plainTextToken
            ],200);
     }
+    public function logout()
+    {
+        $token=Auth()->user()->currentAccessToken()->delete();
+        return response()->json([
+            'msg'=>'Logout feito com sucesso.'
+           ],401);
+    }
 }
