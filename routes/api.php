@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\Auth\LoginController;
+use App\Http\Controllers\Api\Auth\RegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProductController;
@@ -26,3 +28,9 @@ Route::group(['prefix'=>'product'], function(){
    Route::get('/{id}',[ProductController::class,'show'])->name('product.show');
    Route::put('/{id}',[ProductController::class,'update'])->name('product.update');
 });
+
+Route::group(['prefix' => 'auth'], function() {
+    Route::post('login',[LoginController::class,'login']);
+    Route::post('register',[RegisterController::class,'register']);
+});
+
